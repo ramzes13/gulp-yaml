@@ -1,7 +1,7 @@
 {
-  "name": "gulp-yaml",
+  "name": "gulp-yaml-sort",
   "version": "1.0.1",
-  "description": "Convert YAML to JSON",
+  "description": "Sort YAML",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -19,18 +19,11 @@
     "gulp",
     "yaml",
     "yml",
-    "json",
     "stream"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/crissdev/gulp-yaml.git"
-  },
-  "homepage": "https://github.com/crissdev/gulp-yaml",
-  "author": {
-    "name": "Cristian Trifan",
-    "email": "criss.trifan@gmail.com",
-    "url": "http://crissdev.com"
+    "url": "https://github.com/ramzes13/js-yaml"
   },
   "license": "MIT",
   "devDependencies": {

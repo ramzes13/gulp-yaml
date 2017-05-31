@@ -9,11 +9,14 @@ var PluginError   = gutil.PluginError;
 var PLUGIN_NAME   = 'gulp-yaml';
 
 
-function yaml2json(buffer, options) {
+function yamlSort(buffer, options) {
   var contents = buffer.toString('utf8');
   var ymlOptions = {schema: options.schema, filename: options.filename};
   var ymlDocument = options.safe ? yaml.safeLoad(contents, ymlOptions) : yaml.load(contents, ymlOptions);
-  return new Buffer(JSON.stringify(ymlDocument, options.replacer, options.space));
+  return new Buffer(yaml.dump(ymlDocument, {
+        'sortKeys': true,
+        'lineWidth': 100000
+    }));
 }
 
 function parseSchema(schema) {
@@ -60,8 +63,7 @@ module.exports = function(options) {
         return callback();
       }
       try {
-        file.contents = yaml2json(file.contents, options);
-        file.path = gutil.replaceExtension(file.path, '.json');
+        file.contents = yamlSort(file.contents, options);
       }
       catch (error) {
         this.emit('error', new PluginError(PLUGIN_NAME, error, {showStack: true}));
@@ -81,8 +83,7 @@ module.exports = function(options) {
           }
           else {
             try {
-              var parsed = yaml2json(buf, options);
-              file.path = gutil.replaceExtension(file.path, '.json');
+              var parsed = yamlSort(buf, options);
               cb(null, parsed);
             }
             catch (error) {
